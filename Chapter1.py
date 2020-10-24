@@ -46,5 +46,7 @@ plt.ylabel("Frequency")
 plt.title("Histogram of Radius Mean for Bening and Malignant Tumors")
 plt.show()
 frequent_malignant_radius_mean = m[0].max() # ?
+index_frequent_malignant_radius_mean = list(m[0]).index(frequent_malignant_radius_mean)
 
-
+## 여기서부터 시작
+print("hello, world")
