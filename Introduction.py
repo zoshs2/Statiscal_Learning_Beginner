@@ -1,6 +1,7 @@
 ### Introduction
 # Basic statistic for beginners
 
+## Chapter 1.py
 # 1. Histogram
 # 2. Outliers
 # 3. Box Plot

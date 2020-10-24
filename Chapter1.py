@@ -1,3 +1,9 @@
+### Statistical Learning for Beginner : Chapter 1 
+# 1. Histogram
+# 2. Outlier
+# 3. Box plot
+# 4. Summary Statistics
+
 import pandas as pd
 import numpy as np
 import seaborn as sns
