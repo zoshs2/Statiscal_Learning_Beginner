@@ -1,11 +1,14 @@
 ### Introduction
 # Basic statistic for beginners
+# https://www.kaggle.com/kanncaa1/statistical-learning-tutorial-for-beginners
 
 ## Chapter 1.py
 # 1. Histogram
 # 2. Outliers
 # 3. Box Plot
 # 4. Summary Statistics
+
+## Chapter 2.py
 # 5. CDF (Cumulative Distribution Function?)
 # 6. Effect Size
 # 7. Relationship Between Variables
