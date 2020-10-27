@@ -14,6 +14,8 @@
 # 7. Relationship Between Variables
 # 8. Correlation
 # 9. Covariance 
+
+## Chapter 3.py
 # 10. Pearson Correlation
 # 11. Spearman's Rank Correlation
 # 12. Mean VS. Median

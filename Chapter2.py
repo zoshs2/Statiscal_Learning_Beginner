@@ -2,6 +2,8 @@
 # 1. CDF (Cumulative Distribution Function)
 # 2. Effect Size (feat. pooled & unpooled variance)
 # 3. Relationship Between Variables (두 변수 사이의 관계)
+# 4. Correlation
+# 5. Covariance ('선형관계' 의존성) -> Cov(X,Y)=0이라고 두 변수가 독립변수라는 의미가 아니다.
 
 
 import pandas as pd
@@ -115,6 +117,7 @@ print("type of this : ", type(data.loc[:,["radius_mean", "area_mean", "fractal_d
 
 # Lets look at correlation between all features.
 # Using Heatmap!
+'''
 print("data.corr() : \n", data.corr())
 f, ax = plt.subplots(figsize=(18,18))
 sns.heatmap(data.corr(), annot=True, linewidths=0.5, fmt=".1f", ax=ax)
@@ -122,8 +125,10 @@ plt.xticks(rotation=90)
 plt.yticks(rotation=0)
 plt.title("Correlation Map")
 plt.show()
+'''
 
-## Covariance (공분산)
+## Covariance (공분산) - 선형관계 의존성을 보는 것!!! Cov(X,Y)=0이라고 관계가 없는 것은 아님. ex) y=x^2 -> Cov(x,y)=0
+# ref : https://m.blog.naver.com/PostView.nhn?blogId=sw4r&logNo=221025662499&proxyReferer=https:%2F%2Fwww.google.co.kr%2F
 # Covariance is measure of the tendency of two variables to vary together.
 # ( 공분산은 두 변수가 변화할 때, 함께 변화하는 경향에 대한 값이다. )
 # Cov(X, Y) : Dependence of realizations of 2 (or more) different RV(Random Variable)s.
@@ -132,8 +137,18 @@ plt.show()
 # - 공분산은 랜덤변수 간 서로에 대한 의존성을 나타낸다.
 # - X가 커지면, Y도 커진다 또는 X가 작아지면, Y도 작아진다. (vice versa Y, X) : 이 때 Covariance 는 양수값을 갖는다.
 #   - 서로에 대한 의존성이 클 수록 큰 양수값을 갖는다.
+#   - 서로 반대 방향의 의존성을 갖는다면(ex. X가 커지면 Y는 작아진다.), Cov는 음수(-)부호를 갖는다.
 # - 랜덤변수 간 서로에 대한 의존성이 낮다면, Covariance 는 0에 가까운 값을 갖는다.
 # - 그렇다면 Covariance(X,Y)가 0이라면, 두 변수는 서로 독립변수인가? : 꼭 그렇지는 않다!
-# 
+# - Cov(X,Y)는 결국 두 랜덤변수 사이의 '선형관계 의존성'을 보는 것이다. 
+# - 따라서 Cov(X,Y)는 두 변수의 선형관계가 없다는 것을 의미하지, 모든 관계가 없다는 것을 의미하지는 않는다.
+# - '독립'이라는 조건은 두 변수 사이에 '모든' 관계가 없다는 것을 의미하므로, 그냥 '독립'이라는 의미는 보다 상위개념인 것이다.
+# - 즉, y = x^2 라는 x와 y사이의 관계가 있고, 그래프로 표현하면 뒤집어진 포물선 모양이다. 
+# - 여기서 두 변수는 관계식을 갖지만, Covariance를 계산하면 Cov(x,y)=0이 된다. '선형관계가 없을 뿐'이다.
 
+# numpy의 메소드를 활용해서 Covariance 구하는 방법
+# -> np.cov(data.radius_mean, data.area_mean)
 
+# pandas class 에 포함된 covariance 메소드
+print("Covariance between radius mean & area mean : ", data.radius_mean.cov(data.area_mean)) # 대기권을 돌파하는 선형관계 의존성...
+print("Covariance between radius mean & fractal dimension se : ", data.radius_mean.cov(data.fractal_dimension_se)) # 두 변수는 선형관계 의존성이 전혀 없다.
