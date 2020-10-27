@@ -1,9 +1,9 @@
 ### Chapter 2
-# 1. CDF (Cumulative Distribution Function)
-# 2. Effect Size (feat. pooled & unpooled variance)
-# 3. Relationship Between Variables (두 변수 사이의 관계)
-# 4. Correlation
-# 5. Covariance ('선형관계' 의존성) -> Cov(X,Y)=0이라고 두 변수가 독립변수라는 의미가 아니다.
+# 5. CDF (Cumulative Distribution Function)
+# 6. Effect Size (feat. pooled & unpooled variance)
+# 7. Relationship Between Variables (두 변수 사이의 관계)
+# 8. Correlation
+# 9. Covariance ('선형관계' 의존성) -> Cov(X,Y)=0이라고 두 변수가 독립변수라는 의미가 아니다.
 
 
 import pandas as pd
