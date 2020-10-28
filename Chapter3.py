@@ -3,7 +3,7 @@
 # 11. Spearman's Rank Correlation () : Pearson 은 outlier영향을 받음. 이 때 Spearman correlation은 그러한 영향이 덜 하기에
 #                                        Spearman's (rank) correlation은 robust하다고 말할 수 있다. (data.rank())를 통해 rank화
 # 12. Mean VS. Median : Median avoids outliers. (Median활용을 통해 outlier의 영향을 회피할 수 있다.)
-# 13. Hypothesis Testing
+# 13. Hypothesis Testing : t검정, p-value, 귀무가설(H_0) & 대립가설(H_1)
 # 14. Normal(Gaussian) Distribution & z-score
 
 import pandas as pd
@@ -127,3 +127,67 @@ print("Median of Salary : ", np.median(salary))
 # 따라서 연구자는 수집한 표본을 바탕으로, 
 # "귀무가설이 참이라고 가정했을 때, 표본으로부터 얻어지는 통계치(ex. 표본 평균)가 나타날(관측될) 확률"을 계산한다.
 # 이 때 계산된 확률값을 p-value라고 한다.
+# 그렇다면, p-value가 낮다는 것은 무슨 의미일까? 
+# 'p-value가 낮다'는 것은 귀무가설(H_0)이 참이라는 가정하에서 표본을 추출했을 때,
+#  이런 표본 평균이 관측될 확률이 낮다는 것을 뜻한다.
+# 즉 p-value가 매우 낮으면(일반적으로 0.05이하), 이러한 표본 통계량은 우연히 나타나기 어러운 케이스이기 때문에 
+# 우리는 귀무가설을 채택하지 않고(=기각하고), 대안적인 가설(대립가설)을 채택하게 된다.
+
+statistic, p_value = stats.ttest_rel(data.radius_mean, data.area_mean)
+# ttest_rel(A,B) -> returns : t-statistic(t-value?) & p-value(two-sided p-value; 양측검정 p값)
+# t-test (t-검정)
+# : 모집단의 분산이나 표준편차를 알지 못할 때, 모집단을 대표하는 표본으로부터 추정된 분산이나 표준편차를 가지고
+# 검정(test)하는 방법으로 "두 모집단의 평균간의 차이가 없다"라는 귀무가설(H_0)과 
+#                     "두 모집단의 평균간의 차이가 있다"라는 대립가설(H_1) 중에
+#                     하나를 선택할 수 있도록 하는 통계적 방법이다.
+# -> 요약하자면, 각 모집단의 표본 통계량(분산, 표준편차)을 통해 복수 모집단 사이의 연관성(correlation) 및 관계를 알아보는 것.
+print(statistic) 
+print("p-value : ", p_value) # 1.525e-184; p-value is almost zero, so we can reject null hypothesis(H_0).
+
+
+## Normal(Gaussian) Distribution & z-score
+# Also called bell-shaped distribution
+# Instead of making formal definition of gaussian distribution, I want to explain it with an example.
+# The classic example is gaussian is IQ score.
+# - In the world, lets say average IQ is 110.
+# - There are few people that are super intelligent and their IQs are higher than 110.
+#   It can be 140 or 150, but it is rare.
+# - Also there are few people that have low intelligent and their IQs is lower than 110.
+#   It can be 40 or 50, but it is rare.
+# - From these information we can say that mean of IQ is 110.
+#   And lets say standard deviation is 20.
+# - Mean and standard deviation is parameters(모수s) of normal distribution.
+# - Lets create 100000 samples and visualize it with histogram.
+'''
+mu, sigma = 110, 20 # mean & standard deviation
+s = np.random.normal(mu, sigma, 100000)
+print("mean : ", np.mean(s))
+print("standard deviation : ", np.std(s))
+# visualize with histogram.
+plt.figure(figsize=(10,7))
+plt.hist(s, 100, density=False)
+plt.ylabel("frequency")
+plt.xlabel("IQ")
+plt.title("Histogram of IQ")
+plt.show()
+'''
+
+# As it can be seen from histogram, most of the people are cumulatived near to 110 
+# that is mean of our normal distribution.
+# However! what is the "most" I mentioned at previous sentence? 
+# What if I want to know what percentage of people should have an IQ score between 80 and 140?
+# We will use z-score to answer this question.
+# * z-score
+# * z = (x - mean) / std
+# * z1 = (80-110)/20 = -1.5
+# * z2 = (140-110)/20 = 1.5
+# * Distance between mean and 80 is 1.5*Std & distance between mean and 140 is 1.5*Std as well.
+# If you look at 'z-table', you will see that 1.5 * Std correspond to 0.4332.
+# Lets calculate it with 2, because one from 80 to mean and another one from mean to 140.
+# -> 0.4332 * 2 = 0.8664
+# We can conclude that 86.64% of people has an IQ between 80 and 140.
+# 이번에는 만약 IQ가 80보다 낮은 사람의 비중을 알고 싶다면?
+# -> z1 = | (80 - 110) / 20 | = 1.5
+#    lets look at table of z-score, z1(1.5) -> 0.4332. (=43.32%) : Range from mean(110) to 80.
+# If we subtract from 50% to 43.32%, we can find percentage of people have an IQ score less than 80.
+# 50% - 43.32% = 6.68%. As a result, 6.68% of people have an IQ score less than 80.
